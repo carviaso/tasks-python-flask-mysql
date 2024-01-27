@@ -203,7 +203,7 @@
         "kind": 5,
         "importPath": "config",
         "description": "config",
-        "peekOfCode": "MYSQL_HOST = ''\nMYSQL_USER = ''\nMYSQL_PASSWORD = ''\nMYSQL_DB = ''\nHEX_SEC_KEY= 'd5fb8c4fa8bd46638dadc4e751e0d68d'",
+        "peekOfCode": "MYSQL_HOST = 'sql3.freemysqlhosting.net'\nMYSQL_USER = 'sql3680219'\nMYSQL_PASSWORD = '4YsXhg2xY1'\nMYSQL_DB = 'sql3680219'\nHEX_SEC_KEY= 'd5fb8c4fa8bd46638dadc4e751e0d68d'",
         "detail": "config",
         "documentation": {}
     },
@@ -212,7 +212,7 @@
         "kind": 5,
         "importPath": "config",
         "description": "config",
-        "peekOfCode": "MYSQL_USER = ''\nMYSQL_PASSWORD = ''\nMYSQL_DB = ''\nHEX_SEC_KEY= 'd5fb8c4fa8bd46638dadc4e751e0d68d'",
+        "peekOfCode": "MYSQL_USER = 'sql3680219'\nMYSQL_PASSWORD = '4YsXhg2xY1'\nMYSQL_DB = 'sql3680219'\nHEX_SEC_KEY= 'd5fb8c4fa8bd46638dadc4e751e0d68d'",
         "detail": "config",
         "documentation": {}
     },
@@ -221,7 +221,7 @@
         "kind": 5,
         "importPath": "config",
         "description": "config",
-        "peekOfCode": "MYSQL_PASSWORD = ''\nMYSQL_DB = ''\nHEX_SEC_KEY= 'd5fb8c4fa8bd46638dadc4e751e0d68d'",
+        "peekOfCode": "MYSQL_PASSWORD = '4YsXhg2xY1'\nMYSQL_DB = 'sql3680219'\nHEX_SEC_KEY= 'd5fb8c4fa8bd46638dadc4e751e0d68d'",
         "detail": "config",
         "documentation": {}
     },
@@ -230,7 +230,7 @@
         "kind": 5,
         "importPath": "config",
         "description": "config",
-        "peekOfCode": "MYSQL_DB = ''\nHEX_SEC_KEY= 'd5fb8c4fa8bd46638dadc4e751e0d68d'",
+        "peekOfCode": "MYSQL_DB = 'sql3680219'\nHEX_SEC_KEY= 'd5fb8c4fa8bd46638dadc4e751e0d68d'",
         "detail": "config",
         "documentation": {}
     }
