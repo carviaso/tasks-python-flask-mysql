@@ -1,0 +1,237 @@
+[
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "session",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "redirect",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "url_for",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "config",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "config",
+        "description": "config",
+        "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "MySQL",
+        "importPath": "flask_mysqldb",
+        "description": "flask_mysqldb",
+        "isExtraImport": true,
+        "detail": "flask_mysqldb",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "home",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def home():\n    return render_template('index.html')\n@app.route('/login', methods=['POST'])\ndef login():\n    email = request.form['email']\n    password = request.form['password']\n    cur = mysql.connection.cursor()\n    cur.execute(\"SELECT * FROM users WHERE email = %s AND password = %s\", (email, password))\n    user = cur.fetchone()\n    cur.close()",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "login",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def login():\n    email = request.form['email']\n    password = request.form['password']\n    cur = mysql.connection.cursor()\n    cur.execute(\"SELECT * FROM users WHERE email = %s AND password = %s\", (email, password))\n    user = cur.fetchone()\n    cur.close()\n    if user is not None:\n        session['email'] = email\n        session['name'] = user[1]",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "tasks",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def tasks():\n    email = session['email']\n    cur = mysql.connection.cursor()\n    cur.execute(\"SELECT * FROM tasks WHERE email = %s\", [email])\n    tasks = cur.fetchall()\n    insertObject = []\n    columnNames = [column[0] for column in cur.description]\n    for record in tasks:\n        insertObject.append(dict(zip(columnNames, record)))\n    cur.close()",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "logout",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def logout():\n    session.clear()\n    return redirect(url_for('home'))\n@app.route('/new-task', methods=['POST'])\ndef newTask():\n    title = request.form['title']\n    description = request.form['description']\n    email = session['email']\n    d = datetime.now()\n    dateTask = d.strftime(\"%Y-%m-%d $H:%M:%S\")",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "newTask",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def newTask():\n    title = request.form['title']\n    description = request.form['description']\n    email = session['email']\n    d = datetime.now()\n    dateTask = d.strftime(\"%Y-%m-%d $H:%M:%S\")\n    if title and description and email:\n        cur = mysql.connection.cursor()\n        sql = \"INSERT INTO tasks (email, title, description, date_task) VALUES (%s, %s, %s, %s)\"\n        data = (email, title, description, dateTask)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "newUser",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def newUser():\n    name = request.form['name']\n    surnames = request.form['surnames']\n    email = request.form['email']\n    password = request.form['password']\n    if name and surnames and email and password:\n        cur = mysql.connection.cursor()\n        sql = \"INSERT INTO users (name, surnames, email, password) VALUES (%s, %s, %s, %s)\"\n        data = (name, surnames, email, password)\n        cur.execute(sql, data)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "deleteTask",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def deleteTask():\n    cur = mysql.connection.cursor()\n    id = request.form['id']\n    sql = \"DELETE FROM tasks WHERE id = %s\"\n    data = (id,)\n    cur.execute(sql, data)\n    mysql.connection.commit()\n    return redirect(url_for('tasks'))\nif __name__ == '__main__':\n    app.run(debug=True)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app = Flask(__name__)\napp.config['SECRET_KEY'] = config.HEX_SEC_KEY\napp.config['MYSQL_HOST'] = config.MYSQL_HOST\napp.config['MYSQL_USER'] = config.MYSQL_USER\napp.config['MYSQL_PASSWORD'] = config.MYSQL_PASSWORD\napp.config['MYSQL_DB'] = config.MYSQL_DB\nmysql = MySQL(app)\n@app.route('/', methods=['GET'])\ndef home():\n    return render_template('index.html')",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app.config['SECRET_KEY']",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app.config['SECRET_KEY'] = config.HEX_SEC_KEY\napp.config['MYSQL_HOST'] = config.MYSQL_HOST\napp.config['MYSQL_USER'] = config.MYSQL_USER\napp.config['MYSQL_PASSWORD'] = config.MYSQL_PASSWORD\napp.config['MYSQL_DB'] = config.MYSQL_DB\nmysql = MySQL(app)\n@app.route('/', methods=['GET'])\ndef home():\n    return render_template('index.html')\n@app.route('/login', methods=['POST'])",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app.config['MYSQL_HOST']",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app.config['MYSQL_HOST'] = config.MYSQL_HOST\napp.config['MYSQL_USER'] = config.MYSQL_USER\napp.config['MYSQL_PASSWORD'] = config.MYSQL_PASSWORD\napp.config['MYSQL_DB'] = config.MYSQL_DB\nmysql = MySQL(app)\n@app.route('/', methods=['GET'])\ndef home():\n    return render_template('index.html')\n@app.route('/login', methods=['POST'])\ndef login():",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app.config['MYSQL_USER']",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app.config['MYSQL_USER'] = config.MYSQL_USER\napp.config['MYSQL_PASSWORD'] = config.MYSQL_PASSWORD\napp.config['MYSQL_DB'] = config.MYSQL_DB\nmysql = MySQL(app)\n@app.route('/', methods=['GET'])\ndef home():\n    return render_template('index.html')\n@app.route('/login', methods=['POST'])\ndef login():\n    email = request.form['email']",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app.config['MYSQL_PASSWORD']",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app.config['MYSQL_PASSWORD'] = config.MYSQL_PASSWORD\napp.config['MYSQL_DB'] = config.MYSQL_DB\nmysql = MySQL(app)\n@app.route('/', methods=['GET'])\ndef home():\n    return render_template('index.html')\n@app.route('/login', methods=['POST'])\ndef login():\n    email = request.form['email']\n    password = request.form['password']",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app.config['MYSQL_DB']",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app.config['MYSQL_DB'] = config.MYSQL_DB\nmysql = MySQL(app)\n@app.route('/', methods=['GET'])\ndef home():\n    return render_template('index.html')\n@app.route('/login', methods=['POST'])\ndef login():\n    email = request.form['email']\n    password = request.form['password']\n    cur = mysql.connection.cursor()",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "mysql",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "mysql = MySQL(app)\n@app.route('/', methods=['GET'])\ndef home():\n    return render_template('index.html')\n@app.route('/login', methods=['POST'])\ndef login():\n    email = request.form['email']\n    password = request.form['password']\n    cur = mysql.connection.cursor()\n    cur.execute(\"SELECT * FROM users WHERE email = %s AND password = %s\", (email, password))",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "MYSQL_HOST",
+        "kind": 5,
+        "importPath": "config",
+        "description": "config",
+        "peekOfCode": "MYSQL_HOST = ''\nMYSQL_USER = ''\nMYSQL_PASSWORD = ''\nMYSQL_DB = ''\nHEX_SEC_KEY= 'd5fb8c4fa8bd46638dadc4e751e0d68d'",
+        "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "MYSQL_USER",
+        "kind": 5,
+        "importPath": "config",
+        "description": "config",
+        "peekOfCode": "MYSQL_USER = ''\nMYSQL_PASSWORD = ''\nMYSQL_DB = ''\nHEX_SEC_KEY= 'd5fb8c4fa8bd46638dadc4e751e0d68d'",
+        "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "MYSQL_PASSWORD",
+        "kind": 5,
+        "importPath": "config",
+        "description": "config",
+        "peekOfCode": "MYSQL_PASSWORD = ''\nMYSQL_DB = ''\nHEX_SEC_KEY= 'd5fb8c4fa8bd46638dadc4e751e0d68d'",
+        "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "MYSQL_DB",
+        "kind": 5,
+        "importPath": "config",
+        "description": "config",
+        "peekOfCode": "MYSQL_DB = ''\nHEX_SEC_KEY= 'd5fb8c4fa8bd46638dadc4e751e0d68d'",
+        "detail": "config",
+        "documentation": {}
+    }
+]
