@@ -55,3 +55,9 @@ _Contienen los datos de las tasks_
 3|description|text|
 4|email|text|
 5|date_task|text|
+
+
+## Imagenes
+
+[sitio](https://friconix.com/icon/fi-xnsuxl-user-solid/)
+![icon 1](static\images\plus-circle-solid.svg)
